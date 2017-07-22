@@ -22,7 +22,7 @@
             if($gameDate >= $currentDate ) {
                 $oldStyleClass = '';
             } else {
-                $oldStyleClass = ' oldContent ';
+                $oldStyleClass = ' old-content ';
                 
             }
             

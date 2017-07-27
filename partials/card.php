@@ -17,9 +17,9 @@
 			            
 			$dateformatted = date('l, F j', strtotime($row['date']));
             $gameDate = strtotime($dateformatted);
-            $currentDate = time();
+            $tomorrowDate = strtotime('tomorrow');
             
-            if($gameDate >= $currentDate ) {
+            if($gameDate >= $tomorrowDate ) {
                 $oldStyleClass = '';
             } else {
                 $oldStyleClass = ' old-content ';

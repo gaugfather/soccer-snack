@@ -18,12 +18,13 @@
 			$dateformatted = date('l, F j', strtotime($row['date']));
             $gameDate = strtotime($dateformatted);
             $tomorrowDate = strtotime('tomorrow');
-            
-            if($gameDate >= $tomorrowDate ) {
-                $oldStyleClass = '';
-            } else {
-                $oldStyleClass = ' old-content ';
-                
+            $today = strtotime(12 . ':00:00');
+            $yesterday = strtotime('-1 day', $today);
+                                
+            if($tomorrowDate >= $gameDate && $yesterday >= $gameDate) {
+                $oldStyleClass = ' old-content ';        
+            } else {                
+                $oldStyleClass = '';                   
             }
             
 			echo '<div class="text-center'.$oldStyleClass.'">

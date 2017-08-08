@@ -69,6 +69,7 @@
 								<input type="text" name="person" class="form-control" placeholder="Person" value="'.$person.'">
                                 <input type="hidden" name="date" value="'.$row['date'].'">
                                 <input type="hidden" name="team_id" value="'.$row['team_id'].'">
+                                <input type="hidden" name="description" value="'.$row['description'].'">
 							</div>
 							<div class="form-group">
 								<label>Game Notes

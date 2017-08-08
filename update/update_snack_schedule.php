@@ -7,6 +7,7 @@
 	$date = $_POST['date'];
     $team_id = $_POST['team_id'];
     $notes = $_POST['notes'];
+    $description = $_POST['description'];
 
 	echo "<h3>Update successful!  Refreshing page...</h3>";
 
@@ -17,7 +18,7 @@
 		die();
 	}
 
-    $result = mysql_query("UPDATE snack_signup SET person = '".$person."', notes = '".$notes."' WHERE date = '".$date."' AND team_id=".$team_id."") or die(mysql_error());
+    $result = mysql_query("UPDATE snack_signup SET person = '".$person."', notes = '".$notes."' WHERE date = '".$date."' AND description = '".$description."' AND team_id=".$team_id."") or die(mysql_error());
 
 ?>
 

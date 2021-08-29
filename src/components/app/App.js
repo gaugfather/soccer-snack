@@ -1,6 +1,5 @@
-import './app.css';
-import Header from '../header/Header';
-import Body from '../body/Body';
+import Header from '../header/Header'
+import Body from '../body/Body'
 
 
 function App() {
@@ -12,4 +11,4 @@ function App() {
   );
 }
 
-export default App;
+export default App

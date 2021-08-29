@@ -1,148 +1,190 @@
-import React, { Component } from 'react';
-import Slider from 'react-slick';
-import goal from './goal.png';
+import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUtensils, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { faUtensils, faInfoCircle, faUserSlash, faPencilAlt, faSave } from '@fortawesome/free-solid-svg-icons'
+import { makeStyles } from '@material-ui/core/styles'
 import FormControl from '@material-ui/core/FormControl'
+import Grid from '@material-ui/core/Grid'
 import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import Checkbox from '@material-ui/core/Checkbox'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab'
+import Fade from '@material-ui/core/Fade';
 
-class Snack extends Component {
-
-    constructor(props) {
-        super(props);
-        
-        let players = [
-            {name: 'Haddie'}, {name: 'Liam'}, {name: 'Cole'}
-        ]
-        let absent = []
-        this.state = {
-            players, 
-            snack: '',
-            absent,
-            notes: {
-                value: ''
-            }
-        };
-
-        this.personChange = this.personChange.bind(this);
-        this.notesChange = this.notesChange.bind(this);
-    }
-
-    personChange(event) {
-        this.setState({person: { value: event.target.value}});
-    }
-
-    notesChange(event) {
-        this.setState({notes: {value:event.target.value}});
-    }
-
-    render() {
-        const playersSelect = []
-        for(let i=0; i<=this.state.players.length - 1; i++) {
-            console.log(this.state.players[i])
-            if(i === 0) {
-                playersSelect.push(
-                    <option key={0} value="None">None</option>
-                )
-            }
-            playersSelect.push(
-                <option key={i+1} value={this.state.players[i].name}>{this.state.players[i].name}</option>
-            )
-        }
-        console.log(playersSelect);
-
-        const absentSelect = []
-        for(let i=0; i<=this.state.players.length - 1; i++) {
-            console.log(this.state.players[i])
-            if(i === 0) {
-                absentSelect.push(
-                    <option key={0} value="None">None</option>
-                )
-            }
-            absentSelect.push(
-                <option key={i+1} value={this.state.players[i].name}>{this.state.players[i].name}</option>
-            )
-        }
-        
-
-        const settings = {
-            dots: true,
-            infinite: true,
-            speed: 500,
-            slidesToShow: 1,
-            slidesToScroll: 1
-        };
-
-        const oldStyleClass = "";  //old-content
-        const notesClass = " notes show "; // " notes hide " 
-        
-        const snackIcon = (
-            <FontAwesomeIcon icon={faUtensils} className="icon text-success" />
-        ); 
-        
-        const snackWarningIcon = (
-            <span class="text-danger">None!</span>
-        ); 
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    paddingBottom: '1em'
+  },
+  section: {
+    paddingTop: '.5em',
+    marginLeft: '.5em',
+    marginRight: '.5em',
+    marginBottom: '.5em'
+  },
+  editButton: {
+    backgroundColor: '#3D550C',
+    color: 'white',
+    float: 'right',
+    right: '30px'
+  },
+  editSection: {
+    border: '2px solid #3D550C'
+  },
+  saveButton: {
+    backgroundColor: '#3D550C',
+    color: 'white'
+  },
+  lineSpace: {
+    paddingTop: '.8em'
+  },
+  absentCount: {
+    fontWeight: 'bold',
+    fontSize: 'x-large',
+    paddingLeft: '6px',
+    color: 'black'
+  },
+  updateHeader: {
+    color: 'white',
+    marginBottom: '-.1em',
+    marginLeft: '15%',
+    marginRight: '15%',
+    background: '#3D550C'
+  }
+}))
 
 
-        // DB FIELDS
-        const description = "Practice 5:30, Game 6:00";
-        const field = "5";
-        const person = 'Gauger'
-        const gameNotes = ''
-        const date = 'July 12, 2021'
-        const teamId = 1
-        const notes = ''
 
-        return (
-            <Slider {...settings}>  
-                <div className={"slick-content " + oldStyleClass}>
-                    <h4>{description}</h4>
-                    <div>
-                        <h5>Field: {field}</h5>
-                        <h5>{snackIcon} Snack: {person}</h5>
-                        <div className={notesClass}>
-                            <FontAwesomeIcon icon={faInfoCircle} className="icon" />
-                            Game Notes: <p>{gameNotes}</p>
-                        </div>
-                    </div>
-                    <img alt="goal" className="goal-picture" src={goal} />
-                </div>
-                <div className={"slick-content " + oldStyleClass}>
-                    <h4 style={{color: 'darkred', textDecoration: 'underline'}}>Updates</h4>           
-                    <div className="form-group">
-                        <FormControl fullWidth='true'>
-                        <label>
-                                    <FontAwesomeIcon icon={faUtensils} className="icon text-success" />
-                                    Player bringing snack:
-                                </label>
-                                <Select>
-                                    {playersSelect}
-                                </Select>
-                                <label>
-                                    Absenses
-                                </label>
-                                <Select>
-                                    {playersSelect}
-                                </Select>
+function Snack() {
 
-                        </FormControl>
-                        
-                        {/* <input type="text" className="form-control" placeholder="Person" value={this.state.person.value} onChange={this.personChange}/> */}
-                        {/* <input type="hidden" name="date">{date}</input> */}
-                        {/* <input type="hidden" name="team_id">{teamId}</input> */}
-                        {/* <input type="hidden" name="description">{description} value={description}></input> */}
-                    </div>
-                    <div className="form-group">
-                        <FontAwesomeIcon icon={faInfoCircle} className="icon" />
-                        <label>Other Game Notes</label>
-                        <textarea className="form-control" value={this.state.notes.value} onChange={this.notesChange}>{notes}</textarea>
-                    </div>
-                    <button type="submit" className="btn btn-primary">Save</button>
-                </div>
-            </Slider>
-        );
-    }
+  const classes = useStyles()
+
+  const players = [
+    'Haddie', 'Liam', 'Cole'
+  ]
+
+  const [edit, setEdit] = React.useState(false)
+  const [snackName, setSnackName] = React.useState('Liam')
+
+  let absensesObj = {}
+  players.map((name) => {return absensesObj[name] = false})
+  const [absenses, setAbsenses] = React.useState(absensesObj)
+  const [gameNotes, setGameNotes] = React.useState('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac condimentum tellus, id ornare nulla. Aenean in lorem purus. Ut elementum at est eu aliquam. Nam tempus blandit fringilla.')
+
+
+  function getAbsentCount() {
+    let count = 0
+    Object.entries(absenses).forEach(
+      ([key, value]) => {
+        if(value) count++
+    })
+    return count
+  }
+
+  const showEdit = (event) => {
+    setEdit(!edit)
+  }
+
+  const editAbsenses = (event) => {
+    setAbsenses({ ...absenses, [event.target.name]: event.target.checked })
+  }
+
+  const editSnackName = (event) => {
+    setSnackName(event.target.value)
+  }
+
+  const editGameNotes = (event) => {
+    setGameNotes(event.target.value)
+  }
+
+  const oldStyleClass = ""  //old-content
+  const notesClass = " notes show " // " notes hide "
+
+  const snackIcon = (
+      <FontAwesomeIcon icon={faUtensils} className="icon text-success" />
+  )
+
+  const snackWarningIcon = (
+      <span class="text-danger">None!</span>
+  )
+
+  return (
+
+      <div style={{paddingBottom: '1em'}}>
+        <Fade in={!edit} style={{transitionDelay:'100ms'}}>
+          <div className={classes.section + " " + oldStyleClass} style={{display: !edit ? 'block' : 'none'}}>
+            <h5>{snackIcon} Snack: {snackName}
+            <Fab className={classes.editButton} onClick={showEdit}>
+              <FontAwesomeIcon icon={faPencilAlt} />
+            </Fab>
+            </h5>
+            <div className={classes.lineSpace} />
+            <h6>
+              <FontAwesomeIcon icon={faUserSlash} className="icon text-muted" />
+              Absenses:
+              <span className={classes.absentCount}>
+                {getAbsentCount()}
+              </span>
+            </h6>
+            <div className={classes.lineSpace} />
+            <h6><FontAwesomeIcon icon={faInfoCircle} className="icon" />
+              Game Notes:
+            </h6>
+            <p>{gameNotes}</p>
+          </div>
+        </Fade>
+        <Fade in={edit} style={{ transitionDelay:'100ms'}} >
+          <div className={`${classes.section} ${classes.editSection} ${oldStyleClass}`} style={{display: edit ? 'block' : 'none'}}>
+              <FormControl className={classes.formControl} style={{width: '50%'}} >
+                <label className="text-success" style={{marginBottom: '-14px'}}>
+                  <FontAwesomeIcon icon={faUtensils} className="icon" />
+                    Snack:
+                </label>
+                <Select value={snackName} onChange={editSnackName} color="primary">
+                  {players.map((name) => (
+                    <MenuItem key={name} value={name}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <br />
+              <FormControl className={classes.formControl} style={{width: '100%'}}>
+                <label className="text-muted">
+                  <FontAwesomeIcon icon={faUserSlash} className="icon" />
+                  Absenses:
+                  <span className={classes.absentCount}>
+                    {getAbsentCount()}
+                  </span>
+                </label>
+                <Grid container alignItems="center" direction="row" justifyContent="center">
+                  {players.map((name) => (
+                    <FormControlLabel control={
+                      <Checkbox color="primary" checked={absenses[name]} onChange={editAbsenses} name={name} />
+                    } label={name} />
+                  ))}
+                </Grid>
+              </FormControl>
+              <br />
+              <FormControl className={classes.formControl} style={{width: '90%'}} >
+                <label>
+                  <FontAwesomeIcon icon={faInfoCircle} className="icon" />
+                  Game Notes:
+                </label>
+                <TextField multiline color="primary" value={gameNotes} onChange={editGameNotes}/>
+              </FormControl>
+              <br />
+              <FormControl className={classes.formControl} style={{width: '80%'}} >
+                <Button className={classes.saveButton} startIcon={<FontAwesomeIcon icon={faSave} />}
+                  onClick={showEdit}>
+                    Save
+                </Button>
+              </FormControl>
+            </div>
+          </Fade>
+        </div>
+  )
 }
-
-export default Snack;
+export default Snack

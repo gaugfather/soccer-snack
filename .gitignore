@@ -9,7 +9,7 @@
 .pnp.js
 
 # api dependencies
-/api/node_modules
+/server/node_modules
 
 # testing
 /coverage

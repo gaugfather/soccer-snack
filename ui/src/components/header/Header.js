@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import gfhLogo from './gfh-logo-4web.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
@@ -20,14 +21,16 @@ const useStyles = makeStyles((theme) => ({
   },
   grade: {
     marginTop: '6px',
-    marginBottom: '4px'
-  },
-  team: {
-    marginTop: '4px'
+    marginBottom: '8px'
   },
   emailIcon: {
     paddingLeft: '5px',
     fontSize: 'medium'
+  },
+  noTeam: {
+    display: 'inline-block',
+    marginTop: '2em',
+    marginLeft: '1em'
   },
   coachEmail: {
       color: 'white',
@@ -48,25 +51,33 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-function Header() {
+function Header(props) {
   const classes = useStyles()
-
-  const grade = '3rd'
-  const team = 'Purple'
-
+  
   return (
     <div className={classes.header}>
       <div className="text-center">
        <img alt="Greenheck Fieldhouse Logo" src={gfhLogo} className={classes.greenheckLogo} />
-       <h1 className={classes.grade}>Grade: {grade}</h1>
-       <h2 className={classes.team}>Team: {team}</h2>
-       <h6>Coach:
+       {props.teamData.length ? (
+         <div>
+          <h1 className={classes.grade}>Grade: {props.teamData[0].name}</h1>
+          <h2 className={classes.team}>Team: {props.teamData[0].color} - {props.teamData[0].identifier}</h2>
+         </div>) : null }
+       <h6 className={!props.teamData.length ? classes.noTeam : ''}>Coach:
           <FontAwesomeIcon icon={faEnvelope} className={classes.emailIcon + " icon"} />
-          <a className={classes.coachEmail} href={"mailto: derek.gauger@gmail.com?subject=Soccer team: " + team}>Derek Gauger</a>
+          <a className={classes.coachEmail} href={"mailto: derek.gauger@gmail.com?subject=Soccer team: " + props.team}>Derek Gauger</a>
        </h6>
       </div>
     </div>
   )
+}
+
+Header.propTypes = {
+  teamData: PropTypes.shape({
+    grade: PropTypes.string,
+    team: PropTypes.string
+  })
+  
 }
 
 export default Header

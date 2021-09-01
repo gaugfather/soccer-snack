@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUtensils, faInfoCircle, faUserSlash, faPencilAlt, faSave } from '@fortawesome/free-solid-svg-icons'
 import { makeStyles } from '@material-ui/core/styles'
@@ -57,16 +58,14 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function Snack() {
+function Snack(props) {
 
   const classes = useStyles()
 
-  const players = [
-    'Haddie', 'Liam', 'Cole'
-  ]
+  const players = props.players.split(',')
 
   const [edit, setEdit] = React.useState(false)
-  const [snackName, setSnackName] = React.useState('Liam')
+  const [snackName, setSnackName] = React.useState(props.name)
 
   let absensesObj = {}
   players.map((name) => {return absensesObj[name] = false})
@@ -99,7 +98,6 @@ function Snack() {
     setGameNotes(event.target.value)
   }
 
-  const oldStyleClass = ""  //old-content
   const notesClass = " notes show " // " notes hide "
 
   const snackIcon = (
@@ -114,7 +112,7 @@ function Snack() {
 
       <div style={{paddingBottom: '1em'}}>
         <Fade in={!edit} style={{transitionDelay:'100ms'}}>
-          <div className={classes.section + " " + oldStyleClass} style={{display: !edit ? 'block' : 'none'}}>
+          <div className={classes.section} style={{display: !edit ? 'block' : 'none'}}>
             <h5>{snackIcon} Snack: {snackName}
             <Fab className={classes.editButton} onClick={showEdit}>
               <FontAwesomeIcon icon={faPencilAlt} />
@@ -136,7 +134,7 @@ function Snack() {
           </div>
         </Fade>
         <Fade in={edit} style={{ transitionDelay:'100ms'}} >
-          <div className={`${classes.section} ${classes.editSection} ${oldStyleClass}`} style={{display: edit ? 'block' : 'none'}}>
+          <div className={`${classes.section} ${classes.editSection}`} style={{display: edit ? 'block' : 'none'}}>
               <FormControl className={classes.formControl} style={{width: '50%'}} >
                 <label className="text-success" style={{marginBottom: '-14px'}}>
                   <FontAwesomeIcon icon={faUtensils} className="icon" />
@@ -187,4 +185,12 @@ function Snack() {
         </div>
   )
 }
+
+Snack.propTypes = {
+  name: PropTypes.string,
+  absenses: PropTypes.array,
+  players: PropTypes.array,
+  notes: PropTypes.string
+}
+
 export default Snack

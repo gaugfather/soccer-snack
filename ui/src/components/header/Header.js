@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Header(props) {
   const classes = useStyles()
-  
+
   return (
     <div className={classes.header}>
       <div className="text-center">
@@ -61,7 +61,7 @@ function Header(props) {
        {props.teamData.length ? (
          <div>
           <h1 className={classes.grade}>Grade: {props.teamData[0].name}</h1>
-          <h2 className={classes.team}>Team: {props.teamData[0].color} - {props.teamData[0].identifier}</h2>
+          <h2 className={classes.team}>Team: {props.teamData[0].color}-{props.teamData[0].identifier}</h2>
          </div>) : null }
        <h6 className={!props.teamData.length ? classes.noTeam : ''}>Coach:
           <FontAwesomeIcon icon={faEnvelope} className={classes.emailIcon + " icon"} />

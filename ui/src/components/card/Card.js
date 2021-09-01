@@ -1,9 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import soccerBall from './soccer-ball.png'
 import goal from './goal.png'
 import Snack from '../snack/Snack'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
+import moment from 'moment'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -11,7 +13,8 @@ const useStyles = makeStyles((theme) => ({
     background: 'rgba(176,255,233,0.9)',
   	paddingTop: '1em',
     marginRight: '.5em',
-    marginLeft: '.5em'
+    marginLeft: '.5em',
+    textAlign: 'center'
   },
   ballPicture: {
     width: '20px',
@@ -20,28 +23,43 @@ const useStyles = makeStyles((theme) => ({
   goalPicture: {
     width: '8em',
   	paddingLeft: '1em'
+  },
+  timeLabel: {
+    fontSize: 'smaller',
+    marginRight: '4px'
+  },
+  oldDate: {
+    textDecoration: 'line-through',
+    background: 'rgb(105 102 102 / 91%)'
   }
 }))
 
-function Card() {
+function Card(props) {
   const classes = useStyles()
 
-  const oldStyleClass = ""  //old-content
-
-  // DB FIELDS
-  const description = "Practice 5:30, Game 6:00"
-  const field = "5"
-  const date = 'July 12, 2021'
-  const teamId = 1
+  const { day, 
+    game_time: gameTime, 
+    practice_time: practiceTime, 
+    field, snack,
+    absenses, players } = props.schedule
+  const mysqlTimeFormat = 'hh:mm:ss'
+  const uiTimeFormat = 'h:mma'
 
   return (
-    <div className={classes.card}>
-      <div className={"text-center " + oldStyleClass}>
+    <div className={`${classes.card} ${moment().isAfter(moment(day)) ? classes.oldDate: ''}`}>
+      <div className={''}>
         <h3>
           <img alt="soccer ball" className={classes.ballPicture} src={soccerBall} />
-          {date}
+          {moment(day).format('MMM DD, YYYY')}
         </h3>
-        <h4>{description}</h4>
+        <h4>
+          <span className={classes.timeLabel}>Practice:</span>
+           { moment(practiceTime, mysqlTimeFormat).format(uiTimeFormat) }
+           </h4>
+        <h4>
+          <span className={classes.timeLabel}>Game:</span>
+           { moment(gameTime, mysqlTimeFormat).format(uiTimeFormat) }
+        </h4>
         <Grid container alignItems="center" direction="row" justifyContent="center">
           <Grid item xs={6}>
             <h5 style={{float: 'right', paddingTop: '13px'}}>Field: {field}</h5>
@@ -52,9 +70,18 @@ function Card() {
           <Grid item xs={3} />
         </Grid>
         <div style={{paddingTop: '.8em'}} />
-        <Snack />
+        <Snack name={snack} absenses={absenses} players={players} />
       </div>
     </div>
   )
+}
+
+Card.propTypes = {
+  schedule: PropTypes.shape({
+    day: PropTypes.string,
+    field: PropTypes.string,
+    game_time: PropTypes.string,
+    practice_time: PropTypes.string
+  })
 }
 export default Card

@@ -31,7 +31,7 @@ function App() {
   return (
     <div id="app">
       {loading ? (<LinearProgress />): <Header teamData={teamData} />}
-      {!loading && teamData && teamData.length ? <Body /> : null}
+      {!loading && teamData && teamData.length ? <Body teamData={teamData} /> : null}
       {!loading && (!teamData || !teamData.length) ? <Error /> : null}
     </div>
   );

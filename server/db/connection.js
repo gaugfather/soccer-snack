@@ -1,15 +1,14 @@
 const mysql = require('mysql')
+const util = require('util')
 
-
-var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'soccersack',
-    password: 's0ccer',
-    database: 'soccersnack'
+const pool = mysql.createPool({
+    connectionLimit: 10,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
 })
 
-connection.connect((err) => {
-    if(err) throw err
+pool.query = util.promisify(pool.query)
 
-    console.log('Connected to mysql')
-})
+module.exports = pool

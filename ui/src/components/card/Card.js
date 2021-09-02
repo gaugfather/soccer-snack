@@ -28,9 +28,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 'smaller',
     marginRight: '4px'
   },
+  field: {
+    float: 'right', 
+    paddingTop: '13px'
+  },
   oldDate: {
     textDecoration: 'line-through',
-    background: 'rgb(105 102 102 / 91%)'
+    background: 'rgb(110 165 149 / 90%)'
   }
 }))
 
@@ -40,13 +44,15 @@ function Card(props) {
   const { day, 
     game_time: gameTime, 
     practice_time: practiceTime, 
-    field, snack,
-    absenses, players } = props.schedule
+    field, snack, notes,
+    absenses, players, schedule_id: id } = props.schedule
   const mysqlTimeFormat = 'hh:mm:ss'
   const uiTimeFormat = 'h:mma'
 
+  const oldDate = moment().isAfter(moment(day))
+
   return (
-    <div className={`${classes.card} ${moment().isAfter(moment(day)) ? classes.oldDate: ''}`}>
+    <div className={`${classes.card} ${oldDate ? classes.oldDate: ''}`}>
       <div className={''}>
         <h3>
           <img alt="soccer ball" className={classes.ballPicture} src={soccerBall} />
@@ -62,7 +68,7 @@ function Card(props) {
         </h4>
         <Grid container alignItems="center" direction="row" justifyContent="center">
           <Grid item xs={6}>
-            <h5 style={{float: 'right', paddingTop: '13px'}}>Field: {field}</h5>
+            <h5 className={classes.field} style={{ textDecoration: !oldDate ? 'none' : 'line-through'}}>Field: {field}</h5>
           </Grid>
           <Grid item xs={3}>
             <img alt="goal" className={classes.goalPicture} src={goal} />
@@ -70,7 +76,8 @@ function Card(props) {
           <Grid item xs={3} />
         </Grid>
         <div style={{paddingTop: '.8em'}} />
-        <Snack name={snack} absenses={absenses} players={players} />
+        <Snack name={snack} absenses={absenses} players={players} 
+           notes={notes} oldDate={oldDate} id={id} />
       </div>
     </div>
   )

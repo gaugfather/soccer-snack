@@ -3,7 +3,7 @@ import Header from '../header/Header'
 import Body from '../body/Body'
 import Error from '../error/Error'
 import { useEffect } from 'react'
-import { getTeamData } from '../../services/api'
+import { getScheduleDataByTeam } from '../../services/api'
 import LinearProgress from '@material-ui/core/LinearProgress'
 
 
@@ -13,7 +13,7 @@ function App() {
     setLoading(true)
     const pathname = window.location.pathname
     const teamId = pathname.substring(1)
-    const teamData = await getTeamData(teamId)
+    const teamData = await getScheduleDataByTeam(teamId)
     setTeamData(teamData)
     setLoading(false)
   }
@@ -26,8 +26,6 @@ function App() {
   const [teamData, setTeamData] = React.useState(null)
   const [loading, setLoading] = React.useState(true)
 
-
-  console.log(teamData)
   return (
     <div id="app">
       {loading ? (<LinearProgress />): <Header teamData={teamData} />}

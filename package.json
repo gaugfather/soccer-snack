@@ -20,7 +20,8 @@
   "scripts": {
     "ui": "cd ui && npm start",
     "api": "cd server && npm run dev",
-    "dev": "concurrently --kill-others-on-fail \"npm run ui\" \"npm run api\""
+    "dev": "concurrently --kill-others-on-fail \"npm run ui\" \"npm run api\"",
+    "prod-deploy": "cd ui && npm run build && rm -f ../server/build/ && mv build ../server && cd ../server && npm start"
   },
   "eslintConfig": {
     "extends": [

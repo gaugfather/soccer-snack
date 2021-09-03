@@ -1,4 +1,5 @@
 const mysql = require('../../db/connection')
+const logger = require('../../util/logger')
 
 async function getTeamDataById(teamId) {
     return await mysql.query(
@@ -22,7 +23,9 @@ async function getPlayerIdByName(first) {
             [first]
         )
         if(!result.length) {
-            throw Error(`Player ${first} not found!`)
+            const error = `Player ${first} not found!`
+            logger.error(error)
+            throw Error(error)
         }
         return result[0].id
     } else {
@@ -36,7 +39,8 @@ async function updateSchedule(notes, snackPlayerId, scheduleId) {
         [notes, snackPlayerId, scheduleId]
     )
     if(!result) {
-        throw Error(`Unable to update schedule ${scheduleId}`)
+        const error = `Unable to update schedule ${scheduleId}`
+        throw Error(error)
     }
     return 'success'
 }

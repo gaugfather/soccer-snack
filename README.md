@@ -1,8 +1,11 @@
 # Soccer Snack App
 
-This project was bootstrapped with:
-- Create React App
-- ETC...
+This project was created with:
+- React (front-end)
+- Express (back-end)
+- mySQL (persistence)
+- logs are saved in ./logs
+- and is hosted from a raspberrypi via noip at [greenhecksoccer.ddns.net](greenhecksoccer.ddns.net)
 
 ## DB Setup
 ```
@@ -68,3 +71,7 @@ Send requests to [http://localhost:5000](http:localhost:5000).
 ### `npm run dev`
 
 Builds the UI and API apps in development mode  together.
+
+### `npm run prod-deploy`
+
+Builds the UI in production mode, moves it to the server folder, and hosts it from express, port 5000 [http://localhost:5000](http://localhost:5000)

@@ -58,7 +58,7 @@ function Card(props) {
           <img alt="soccer ball" className={classes.ballPicture} src={soccerBall} />
           {moment(day).format('MMM DD, YYYY')}
         </h3>
-        <h4>
+        <h4 style={{display: practiceTime ? 'block' : 'none'}}>
           <span className={classes.timeLabel}>Practice:</span>
            { moment(practiceTime, mysqlTimeFormat).format(uiTimeFormat) }
            </h4>

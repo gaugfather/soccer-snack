@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundAttachment: 'fixed',
-    height: '250vh'
+    height: '300vh'
   }
 }))
 

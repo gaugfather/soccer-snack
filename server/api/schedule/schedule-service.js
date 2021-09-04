@@ -1,7 +1,7 @@
 const mysql = require('../../db/connection')
 const logger = require('../../util/logger')
 
-async function getTeamDataById(teamId) {
+async function getTeamDataByIdentifier(teamIndentifier) {
     return await mysql.query(
         'select s.id schedule_id, t.name, t.color, t.identifier, ' + 
         's.day, s.field, s.game_time, s.practice_time, s.notes, ' +
@@ -11,8 +11,8 @@ async function getTeamDataById(teamId) {
         'FROM schedule s LEFT JOIN absenses a ON a.schedule=s.id ' +
         'LEFT JOIN players p ON a.player=p.id ' + 
         'LEFT JOIN team t ON s.team=t.id ' + 
-        'WHERE t.id=? GROUP BY s.id', 
-        [teamId]
+        'WHERE t.identifier=? GROUP BY s.id', 
+        [teamIndentifier]
     )
 }
 
@@ -70,7 +70,7 @@ async function updatePlayerAttendance(playerId, isAbsent, scheduleId) {
 }
 
 module.exports = {
-    getTeamDataById,
+    getTeamDataByIdentifier,
     getPlayerIdByName,
     updateSchedule,
     updatePlayerAttendance

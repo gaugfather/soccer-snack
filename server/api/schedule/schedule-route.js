@@ -4,30 +4,35 @@ const scheduleService = require('./schedule-service')
 const logger = require('../../util/logger')
 
 
+function getIpAddress(req) {
+  return req.ip ? req.ip.toString().replace('::ffff:', '') : 'Unknown'
+}
+
 router.route('/:id')
   .get(async (req, res) => {
-      if(req.params && req.params.id) {
-        const teamId = req.params.id
-        const results = await scheduleService.getTeamDataById(teamId)
-        if(results.length) {
-          logger.info(`Team id: ${teamId} loaded`)
-          return res.status(200).send(results)
-        } else {
-          logger.error(`Team id: ${teamId} not found in DB error`)
-          return res.status(404).send({'status': 'An error occurred'})
-        }
+    const ipAddress = getIpAddress(req)
+    if(req.params && req.params.id) {
+      const teamId = req.params.id
+      const results = await scheduleService.getTeamDataByIdentifier(teamId)
+      if(results.length) {
+        logger.info(`IP: ${ipAddress} - Team id: ${teamId} loaded`)
+        return res.status(200).send(results)
       } else {
-        logger.error(`Team id: ${teamId} not in request error`)
-        return res.status(200).send({'status': 'No team found'})
+        logger.error(`IP: ${ipAddress} - Team id: ${teamId} not found in DB error`)
+        return res.status(404).send({'status': 'An error occurred'})
       }
+    } else {
+      logger.error(`IP: ${ipAddress} - Team id: ${teamId} not in request error`)
+      return res.status(200).send({'status': 'No team found'})
     }
-  )
+  })
 
   .post(async (req, res) => {
+    const ipAddress = getIpAddress(req)
     if(req.params && req.params.id && req.body) {
       const scheduleId = req.params.id
 
-      logger.info(`Updating scheduleId ${scheduleId} with data ${JSON.stringify(req.body)}`)
+      logger.info(`IP: ${ipAddress} - Updating scheduleId ${scheduleId} with data ${JSON.stringify(req.body)}`)
 
       const snackPlayerId = req.body.snack ? await scheduleService.getPlayerIdByName(req.body.snack) : null
       const notes = req.body.notes
@@ -40,7 +45,7 @@ router.route('/:id')
       }
       return res.status(200).send({'status': 'success'})
     } else {
-      logger.error(`Invalid request params, trying to update schedule ${scheduleId}`)
+      logger.error(`IP: ${ipAddress} - Invalid request params, trying to update schedule ${scheduleId}`)
       return res.status(404).send({'status': 'An error occurred'})
     }
   })

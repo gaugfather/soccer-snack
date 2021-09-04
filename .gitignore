@@ -21,6 +21,7 @@
 logs
 server/.env
 server/build
+ui/build
 
 .DS_Store
 .env.local

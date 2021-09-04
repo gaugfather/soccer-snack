@@ -1,5 +1,5 @@
-export async function getScheduleDataByTeam(teamId) {
-    const response = await fetch(`/api/schedule/${teamId}`)
+export async function getScheduleDataByTeam(teamIndentifier) {
+    const response = await fetch(`/api/schedule/${teamIndentifier}`)
     if(!response.ok) {
         return {}
     } else {

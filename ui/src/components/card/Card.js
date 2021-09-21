@@ -49,7 +49,7 @@ function Card(props) {
   const mysqlTimeFormat = 'hh:mm:ss'
   const uiTimeFormat = 'h:mma'
 
-  const oldDate = moment().isAfter(moment(day))
+  const oldDate = moment().isAfter(moment(day).add(20, 'hours'))
 
   return (
     <div className={`${classes.card} ${oldDate ? classes.oldDate: ''}`}>

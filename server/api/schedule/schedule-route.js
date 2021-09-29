@@ -15,7 +15,7 @@ router.route('/:id')
       const teamId = req.params.id
       const results = await scheduleService.getTeamDataByIdentifier(teamId)
       if(results.length) {
-        logger.info(`IP: ${ipAddress} - Team id: ${teamId} loaded`)
+        logger.info(`${new Date()} - IP: ${ipAddress} - Team id: ${teamId} loaded`)
         return res.status(200).send(results)
       } else {
         logger.error(`IP: ${ipAddress} - Team id: ${teamId} not found in DB error`)
